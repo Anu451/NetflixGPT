@@ -1,11 +1,8 @@
 import React from 'react';
+import Body from './components/Body';
 
 function App() {
-	return (
-		<div>
-			<p className=" text-xl">Hello world</p>
-		</div>
-	);
+	return <Body />;
 }
 
 export default App;
