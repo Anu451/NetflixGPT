@@ -1,8 +1,20 @@
+import { checkValidation } from '../utils/validation';
 import Header from './Header';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const Login = () => {
 	const [isSignIn, setIsSignIn] = useState(true);
+	const [validationErr, setValidationErr] = useState([]);
+	const emailRef = useRef(null);
+	const passwordRef = useRef(null);
+
+	const handelSubmit = () => {
+		const valdidation = checkValidation(
+			emailRef.current.value,
+			passwordRef.current.value,
+		);
+		setValidationErr(valdidation);
+	};
 	return (
 		<div className=" relative">
 			<Header />
@@ -12,7 +24,10 @@ const Login = () => {
 					alt=""
 				/>
 			</div>
-			<form className=" absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 bg-black/70 p-10 rounded-md flex flex-col text-white gap-5 w-3/12">
+			<form
+				className=" absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 bg-black/70 p-10 rounded-md flex flex-col text-white gap-5 w-3/12"
+				onSubmit={(e) => e.preventDefault()}
+			>
 				<h2 className=" text-3xl  font-semibold mb-5">
 					{isSignIn ? 'Sign In' : 'Sign Up'}
 				</h2>
@@ -35,6 +50,7 @@ const Login = () => {
 					id="email-id"
 					placeholder="Enter your email id "
 					className=" bg-zinc-800 px-5 py-2 rounded focus-visible:outline-0"
+					ref={emailRef}
 				/>
 
 				{/* <label htmlFor="password" className=" text-white">
@@ -46,8 +62,12 @@ const Login = () => {
 					id="password"
 					placeholder="Enter your password"
 					className=" bg-zinc-800 px-5 py-2 rounded focus-visible:outline-0"
+					ref={passwordRef}
 				/>
-				<button className="mt-3 bg-red-600 text-white rounded py-2">
+				<button
+					className="mt-3 bg-red-600 text-white rounded py-2"
+					onClick={handelSubmit}
+				>
 					{isSignIn ? 'Sign In' : 'Sign Up'}
 				</button>
 				{isSignIn && (
@@ -56,6 +76,16 @@ const Login = () => {
 						<label htmlFor="rememberMe">Remember me</label>
 					</div>
 				)}
+
+				<div className="flex flex-col gap-0 text-sm">
+					{validationErr.map((item, idx) => {
+						return (
+							<p className=" text-red-600" key={idx}>
+								{item}
+							</p>
+						);
+					})}
+				</div>
 
 				<div className=" mt-5 text-zinc-500">
 					<p>
