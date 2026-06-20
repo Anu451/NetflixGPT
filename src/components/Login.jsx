@@ -78,13 +78,14 @@ const Login = () => {
 				)}
 
 				<div className="flex flex-col gap-0 text-sm">
-					{validationErr.map((item, idx) => {
-						return (
-							<p className=" text-red-600" key={idx}>
-								{item}
-							</p>
-						);
-					})}
+					{validationErr &&
+						validationErr.map((item, idx) => {
+							return (
+								<p className=" text-red-600" key={idx}>
+									{item}
+								</p>
+							);
+						})}
 				</div>
 
 				<div className=" mt-5 text-zinc-500">
